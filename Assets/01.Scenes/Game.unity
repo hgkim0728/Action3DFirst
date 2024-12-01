@@ -3938,10 +3938,10 @@ Animator:
   m_GameObject: {fileID: 2814073652714553531}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 02ded044b8e0963439276550f50be6f9, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 501886719843aa54cb8b21e346d285dd, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -9324,6 +9324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 700
+  gravity: -3
 --- !u!54 &2814073652714553533
 Rigidbody:
   m_ObjectHideFlags: 0

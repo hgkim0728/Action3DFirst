@@ -5,36 +5,28 @@ using UnityEngine;
 
 public partial class Player : MonoBehaviour
 {
-    public float moveSpeed = 1.0f;
-    public float rotationSpeed = 100f;
-
-    private Rigidbody rigid;
-
-    void Start()
-    {
-        rigid = GetComponent<Rigidbody>();
-    }
-
-    void Update()
-    {
-        Move();
-    }
-
-    private void Move()
+    protected void Move()
     {
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        Vector3 moveDir = new Vector3(x, -1, z);
-        rigid.velocity = moveDir * moveSpeed;
+        Vector3 moveDir = new Vector3(x, 0, z).normalized;
+        moveDir *= moveSpeed;
+        moveDir.y = gravity;
+        rigid.velocity = moveDir;
 
         if(x != 0 || z != 0)
         {
+            animState = PlayerAnimationState.Run;
             Rotate(moveDir);
+        }
+        else
+        {
+            animState = PlayerAnimationState.Idle;
         }
     }
 
-    private void Rotate(Vector3 _moveDir)
+    protected void Rotate(Vector3 _moveDir)
     {
         Quaternion playerRotation = Quaternion.LookRotation(_moveDir, Vector3.up);
         playerRotation.z = 0;
