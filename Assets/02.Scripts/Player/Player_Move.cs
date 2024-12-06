@@ -7,6 +7,8 @@ public partial class Player : MonoBehaviour
 {
     protected void Move()
     {
+        if (inActive == true) return;
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 

@@ -28,6 +28,8 @@ public partial class Player : MonoBehaviour
             break;
 
             case PlayerAnimationState.Attack:
+                animator.SetInteger("Attack", 1);
+                AttackAnimationState();
             break;
 
             case PlayerAnimationState.Damage:
@@ -35,6 +37,20 @@ public partial class Player : MonoBehaviour
 
             case PlayerAnimationState.Die:
             break;
+        }
+    }
+
+    protected void AttackAnimationState()
+    {
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("infantry_04_attack_B") == true)
+        {
+            float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+
+            if(time >= 1.0f)
+            {
+                animator.SetInteger("Attack", 0);
+                inActive = false;
+            }
         }
     }
 }

@@ -14,8 +14,13 @@ public partial class Player : MonoBehaviour
 
     #region Animation
     protected Animator animator;
+    #endregion
 
-    
+    #region Battle
+    public int playerHP = 10;
+    public int playerAP = 5;
+
+    protected bool inActive = false;
     #endregion
 
     protected void Start()
@@ -27,6 +32,7 @@ public partial class Player : MonoBehaviour
     protected void Update()
     {
         Move();
+        PlayerCommonAttack();
         AnimationStateCheck();
     }
 }
