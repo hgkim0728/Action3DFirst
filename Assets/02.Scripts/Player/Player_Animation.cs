@@ -20,15 +20,12 @@ public partial class Player : MonoBehaviour
         switch(animState)
         {
             case PlayerAnimationState.Idle:
-                animator.SetInteger("Run", 0);
             break;
 
             case PlayerAnimationState.Run:
-                animator.SetInteger("Run", 1);
             break;
 
             case PlayerAnimationState.Attack:
-                animator.SetInteger("Attack", 1);
                 AttackAnimationState();
             break;
 
@@ -38,6 +35,9 @@ public partial class Player : MonoBehaviour
             case PlayerAnimationState.Die:
             break;
         }
+
+        animator.SetInteger("Run", (int)animState);
+        animator.SetInteger("Attack", (int)animState);
     }
 
     protected void AttackAnimationState()
