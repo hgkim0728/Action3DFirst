@@ -19,8 +19,9 @@ public partial class Monster : MonoBehaviour
 
     public float monsterMoveSpeed = 5f;
 
-    public float traceDistance = 5f;
-    public float attackDistance = 1f;
+    public float traceRange = 5f;
+    public float attackRange = 1f;
+    public float attackDistance = 2f;
 
     public int monsterHP = 5;
     public int monsterAP = 1;
@@ -32,7 +33,7 @@ public partial class Monster : MonoBehaviour
         if(monsterState == MonsterState.Idle || monsterState == MonsterState.Trace)
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, traceDistance);
+            Gizmos.DrawWireSphere(transform.position, traceRange);
         }
     }
 
@@ -52,7 +53,8 @@ public partial class Monster : MonoBehaviour
         switch(monsterState)
         {
             case MonsterState.Idle:
-                if(Vector3.Distance(transform.position, playerTrs.position) <= traceDistance)
+                if(Vector3.Distance(transform.position, playerTrs.position) <= traceRange
+                    && Vector3.Distance(transform.position, playerTrs.position) > attackRange)
                 {
                     monsterState = MonsterState.Trace;
                 }
@@ -63,6 +65,7 @@ public partial class Monster : MonoBehaviour
             break;
 
             case MonsterState.Attack:
+                MonsterCommonAttack();
             break;
 
             case MonsterState.Damage:
@@ -77,18 +80,18 @@ public partial class Monster : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, playerTrs.position);
 
-        if(distance >= traceDistance)
+        if(distance >= traceRange)
         {
             monsterState = MonsterState.Idle;
             return;
         }
         
-        if(distance > attackDistance)
+        if(distance > attackRange)
         {
             transform.position = Vector3.MoveTowards(transform.position, playerTrs.position, monsterMoveSpeed * Time.deltaTime);
             transform.LookAt(playerTrs.position, Vector3.up);
         }
-        else if(distance <= attackDistance)
+        else if(distance <= attackRange)
         {
             monsterState = MonsterState.Attack;
         }

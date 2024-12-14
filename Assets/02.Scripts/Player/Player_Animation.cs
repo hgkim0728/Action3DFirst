@@ -13,8 +13,6 @@ public partial class Player : MonoBehaviour
         Die
     }
 
-    protected PlayerAnimationState animState = PlayerAnimationState.Idle;
-
     protected void AnimationStateCheck()
     {
         switch(animState)
@@ -42,13 +40,14 @@ public partial class Player : MonoBehaviour
 
     protected void AttackAnimationState()
     {
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("infantry_04_attack_B") == true)
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack") == true)
         {
             float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            float end = animator.GetCurrentAnimatorStateInfo(0).length;
 
-            if(time >= 1.0f)
+            if(time >= end)
             {
-                animator.SetInteger("Attack", 0);
+                //animator.SetInteger("Attack", 0);
                 inActive = false;
             }
         }

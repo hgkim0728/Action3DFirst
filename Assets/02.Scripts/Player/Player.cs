@@ -14,11 +14,17 @@ public partial class Player : MonoBehaviour
 
     #region Animation
     protected Animator animator;
+    [SerializeField]protected PlayerAnimationState animState = PlayerAnimationState.Idle;
     #endregion
 
     #region Battle
+    protected Collider[] attackTarget = null;
+    public LayerMask monsterLayer;
+
     public int playerHP = 10;
     public int playerAP = 5;
+
+    public float playerAttackRage = 2.0f;
 
     protected bool inActive = false;
     #endregion
@@ -34,5 +40,11 @@ public partial class Player : MonoBehaviour
         Move();
         PlayerCommonAttack();
         AnimationStateCheck();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, playerAttackRage);
     }
 }
