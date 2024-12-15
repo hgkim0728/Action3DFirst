@@ -4,25 +4,13 @@ using UnityEngine;
 
 public class FirePig : Monster
 {
+    /// <summary>
+    /// 돼지 몬스터의 일반 공격
+    /// </summary>
     protected override void MonsterCommonAttack()
     {
+        // 몬스터가 다른 동작을 실행중이라면
         if (inActive == true)
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack") == true)
-            {
-                float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-                float end = animator.GetCurrentAnimatorStateInfo(0).length;
-
-                if (time >= end)
-                {
-                    //animator.SetInteger("Attack", 0);
-                    inActive = false;
-                }
-                else
-                { return; }
-            }
-        }
-        else
         {
             return;
         }
@@ -34,7 +22,7 @@ public class FirePig : Monster
         }
         else
         {
-            transform.LookAt(playerTrs.position);
+            //transform.LookAt(playerTrs.position);
 
             RaycastHit hit;
 
@@ -44,6 +32,10 @@ public class FirePig : Monster
                 playerTrs.GetComponent<Player>().PlayerGetDamage(monsterAP);
                 inActive = true;
             }
+
+            StartCoroutine(MonsterWaitTime(monsterCommonAttackCoolTime));
         }
     }
+
+    
 }

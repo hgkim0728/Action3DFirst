@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9388,13 +9388,14 @@ MonoBehaviour:
   moveSpeed: 5
   rotationSpeed: 500
   gravity: -3
-  animState: 0
   monsterLayer:
     serializedVersion: 2
     m_Bits: 64
   playerHP: 10
   playerAP: 5
   playerAttackRage: 1.5
+  commonAttackCoolTime: 1
+  damageTime: 1.2
 --- !u!1 &2814073652714553839
 GameObject:
   m_ObjectHideFlags: 0
@@ -20863,7 +20864,9 @@ MonoBehaviour:
   monsterMoveSpeed: 2.5
   traceRange: 5
   attackRange: 1.5
-  attackDistance: 3
+  attackDistance: 2
+  monsterCommonAttackCoolTime: 1
+  monsterDamageDelay: 1
   monsterHP: 5
   monsterAP: 1
 --- !u!137 &8864854414700804558

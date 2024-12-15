@@ -4,6 +4,7 @@ using UnityEngine;
 
 public partial class Player : MonoBehaviour
 {
+    // 플레이어 캐릭터 애니메이션 상태 enum
     protected enum PlayerAnimationState
     {
         Idle,
@@ -13,50 +14,33 @@ public partial class Player : MonoBehaviour
         Die
     }
 
+    /// <summary>
+    /// 플레이어 캐릭터의 애니메이션 상태에 따라서 애니메이터 파라미터 값을 적용해
+    /// 애니메이션이 실행되도록 하는 함수
+    /// </summary>
     protected void AnimationStateCheck()
     {
-        switch(animState)
-        {
-            case PlayerAnimationState.Idle:
-            break;
+        //switch(animState)
+        //{
+        //    case PlayerAnimationState.Idle:
+        //    break;
 
-            case PlayerAnimationState.Run:
-            break;
+        //    case PlayerAnimationState.Run:
+        //    break;
 
-            case PlayerAnimationState.Attack:
-                //AttackAnimationState();
-            break;
+        //    case PlayerAnimationState.Attack:
+        //    break;
 
-            case PlayerAnimationState.Damage:
-            break;
+        //    case PlayerAnimationState.Damage:
+        //    break;
 
-            case PlayerAnimationState.Die:
-            break;
-        }
+        //    case PlayerAnimationState.Die:
+        //    break;
+        //}
 
         animator.SetInteger("Run", (int)animState);
         animator.SetInteger("Attack", (int)animState);
     }
 
-    protected void AttackAnimationState()
-    {
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("CommonAttack") == true)
-        {
-            float time = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-            float end = animator.GetCurrentAnimatorStateInfo(0).length;
-
-            if(time >= end)
-            {
-                //animator.SetInteger("Attack", 0);
-                inActive = false;
-            }
-        }
-    }
-
-    protected IEnumerator AttackAnimationInActive()
-    {
-        yield return new WaitForSeconds(commonAttackCoolTime);
-
-        inActive = false;
-    }
+    
 }
