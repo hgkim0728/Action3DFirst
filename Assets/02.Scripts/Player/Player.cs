@@ -25,6 +25,7 @@ public partial class Player : MonoBehaviour
     public int playerAP = 5;
 
     public float playerAttackRage = 2.0f;
+    public float commonAttackCoolTime = 1.0f;
 
     protected bool inActive = false;
     #endregion

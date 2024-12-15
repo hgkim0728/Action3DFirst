@@ -24,7 +24,7 @@ public partial class Player : MonoBehaviour
             break;
 
             case PlayerAnimationState.Attack:
-                AttackAnimationState();
+                //AttackAnimationState();
             break;
 
             case PlayerAnimationState.Damage:
@@ -51,5 +51,12 @@ public partial class Player : MonoBehaviour
                 inActive = false;
             }
         }
+    }
+
+    protected IEnumerator AttackAnimationInActive()
+    {
+        yield return new WaitForSeconds(commonAttackCoolTime);
+
+        inActive = false;
     }
 }

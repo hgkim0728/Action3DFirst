@@ -20,6 +20,8 @@ public class Warrior : Player
             Debug.Log("АјАн");
             animState = PlayerAnimationState.Attack;
             rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+
+            StartCoroutine(AttackAnimationInActive());
         }
     }
 }
