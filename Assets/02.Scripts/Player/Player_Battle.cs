@@ -1,41 +1,41 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public abstract partial class Player : MonoBehaviour
 {
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÏ¹İ°ø°İ
-    /// ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡¼­ °ø°İ¹æ½Ä¿¡ µû¶ó ±¸Çö
+    /// í”Œë ˆì´ì–´ ìºë¦­í„° ì¼ë°˜ê³µê²©
+    /// ìì‹ ì˜¤ë¸Œì íŠ¸ì—ì„œ ê³µê²©ë°©ì‹ì— ë”°ë¼ êµ¬í˜„
     /// </summary>
-    protected abstract void PlayerCommonAttack();
+    protected abstract void CharacterCommonAttack();
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î°¡ ½ÇÇàÁßÀÎ µ¿ÀÛÀ» ³¡³¾ ¶§±îÁö ´ë±âÇÏ°Ô ÇØÁÜ
+    /// í”Œë ˆì´ì–´ê°€ ì‹¤í–‰ì¤‘ì¸ ë™ì‘ì„ ëë‚¼ ë•Œê¹Œì§€ ëŒ€ê¸°í•˜ê²Œ í•´ì¤Œ
     /// </summary>
     /// <returns></returns>
-    protected IEnumerator WaitTime(float _delayTime)
+    protected IEnumerator WaitTime(float _time)
     {
-        yield return new WaitForSeconds(_delayTime);
+        yield return new WaitForSeconds(_time);
 
         inActive = false;
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ÇÇ°İ ÇÔ¼ö
+    /// í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ í”¼ê²© í•¨ìˆ˜
     /// </summary>
-    /// <param name="_damage">ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ¹ŞÀ» µ¥¹ÌÁö</param>
-    public void PlayerGetDamage(int _damage)
+    /// <param name="_damage">í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ë°›ì„ ë°ë¯¸ì§€</param>
+    public void characterGetDamage(int _damage)
     {
         if (inActive == true) return;
 
         inActive = true;
-        // Ä³¸¯ÅÍ ÀÌµ¿ Á¤Áö
+        // ìºë¦­í„° ì´ë™ ì •ì§€
         rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
-        playerHP -= _damage;    // µ¥¹ÌÁö ¸¸Å­ Ã¼·ÂÀ» ±ğ´Â´Ù
+        characterCurrentHP -= _damage;    // ë°ë¯¸ì§€ ë§Œí¼ ì²´ë ¥ì„ ê¹ëŠ”ë‹¤
         animator.SetTrigger("Damage");
         animState = PlayerAnimationState.Damage;
-        StartCoroutine(WaitTime(damageTime));
-        Debug.Log("ÇÇ°İ");
+        StartCoroutine(WaitTime(characterDamageDelayTime));
+        Debug.Log("í”¼ê²©");
     }
 }

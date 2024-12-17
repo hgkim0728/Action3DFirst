@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Monster : MonoBehaviour
 {
-    // ¸ó½ºÅÍ »óÅÂ enum
+    // ëª¬ìŠ¤í„° ìƒíƒœ enum
     protected enum MonsterState
     {
         Idle,
@@ -13,24 +13,24 @@ public partial class Monster : MonoBehaviour
         Damage
     }
 
-    // ¸ó½ºÅÍ ÇöÀç »óÅÂ
+    // ëª¬ìŠ¤í„° í˜„ì¬ ìƒíƒœ
     protected MonsterState monsterState = MonsterState.Idle;
 
-    protected Transform playerTrs;  // ÇÃ·¹ÀÌ¾îÀÇ Transform
+    protected Transform playerTrs;  // í”Œë ˆì´ì–´ì˜ Transform
     protected Animator animator;
 
-    public float monsterMoveSpeed = 5f;     // ¸ó½ºÅÍ ÀÌµ¿ ¼Óµµ
+    public float characterMoveSpeed = 5f;     // ëª¬ìŠ¤í„° ì´ë™ ì†ë„
 
-    public float traceRange = 5f;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ¸¦ Ãß°İÇÏ´Â ¹üÀ§
-    public float attackRange = 1f;  // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ¿¡°Ô °ø°İÀ» ½ÃµµÇÏ´Â ¹üÀ§
-    public float attackDistance = 2f;   // ¸ó½ºÅÍÀÇ °ø°İÀÌ ´ê´Â ¹üÀ§
-    public float monsterCommonAttackCoolTime = 2.0f;    // ¸ó½ºÅÍ ÀÏ¹İ°ø°İ ÄğÅ¸ÀÓ
-    public float monsterDamageDelay = 1f;
+    public float traceRange = 5f;   // í”Œë ˆì´ì–´ ìºë¦­í„°ë¥¼ ì¶”ê²©í•˜ëŠ” ë²”ìœ„
+    public float commonAttackRange = 1f;  // í”Œë ˆì´ì–´ ìºë¦­í„°ì—ê²Œ ê³µê²©ì„ ì‹œë„í•˜ëŠ” ë²”ìœ„
+    public float attackDistance = 2f;   // ëª¬ìŠ¤í„°ì˜ ê³µê²©ì´ ë‹¿ëŠ” ë²”ìœ„
+    public float commonAttackTime = 2.0f;    // ëª¬ìŠ¤í„° ì¼ë°˜ê³µê²© ì¿¨íƒ€ì„
+    public float characterDamageDelayTime = 1f;
 
-    public int monsterHP = 5;   // ¸ó½ºÅÍÀÇ Ã¼·Â
-    public int monsterAP = 1;   // ¸ó½ºÅÍÀÇ °ø°İ·Â
+    public int characterCurrentHP = 5;   // ëª¬ìŠ¤í„°ì˜ ì²´ë ¥
+    public int characterAP = 1;   // ëª¬ìŠ¤í„°ì˜ ê³µê²©ë ¥
 
-    protected bool inActive = false;    // ´Ù¸¥ µ¿ÀÛÀ» ½ÇÇàÁßÀÎÁö ¾Æ´ÑÁö ¾Ë ¼ö ÀÖ°Ô ÇÏ´Â º¯¼ö
+    protected bool inActive = false;    // ë‹¤ë¥¸ ë™ì‘ì„ ì‹¤í–‰ì¤‘ì¸ì§€ ì•„ë‹Œì§€ ì•Œ ìˆ˜ ìˆê²Œ í•˜ëŠ” ë³€ìˆ˜
 
     private void OnDrawGizmos()
     {
@@ -54,31 +54,31 @@ public partial class Monster : MonoBehaviour
 
     void Update()
     {
-        MonsterStateCheck();
+        CharacterStateCheck();
     }
 
     /// <summary>
-    /// ¸ó½ºÅÍÀÇ »óÅÂ¸¦ Ã¼Å©ÇÏ°í »óÅÂ¿¡ µû¶ó ½ÇÇàÇÒ µ¿ÀÛÀ» ¼±ÅÃ
+    /// ëª¬ìŠ¤í„°ì˜ ìƒíƒœë¥¼ ì²´í¬í•˜ê³  ìƒíƒœì— ë”°ë¼ ì‹¤í–‰í•  ë™ì‘ì„ ì„ íƒ
     /// </summary>
-    protected void MonsterStateCheck()
+    protected void CharacterStateCheck()
     {
         switch(monsterState)
         {
             case MonsterState.Idle:
-                // ´ë±â »óÅÂÀÏ ¶§ ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ¸ó½ºÅÍÀÇ Ãß°İ ¹üÀ§ ¾ÈÀ¸·Î µé¾î¿Â´Ù¸é
+                // ëŒ€ê¸° ìƒíƒœì¼ ë•Œ í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ëª¬ìŠ¤í„°ì˜ ì¶”ê²© ë²”ìœ„ ì•ˆìœ¼ë¡œ ë“¤ì–´ì˜¨ë‹¤ë©´
                 if(Vector3.Distance(transform.position, playerTrs.position) <= traceRange
-                    && Vector3.Distance(transform.position, playerTrs.position) > attackRange)
+                    && Vector3.Distance(transform.position, playerTrs.position) > commonAttackRange)
                 {
-                    monsterState = MonsterState.Trace;  // ¸ó½ºÅÍÀÇ ÇöÀç »óÅÂ¸¦ Ãß°İ »óÅÂ·Î
+                    monsterState = MonsterState.Trace;  // ëª¬ìŠ¤í„°ì˜ í˜„ì¬ ìƒíƒœë¥¼ ì¶”ê²© ìƒíƒœë¡œ
                 }
             break;
 
             case MonsterState.Trace:
-                MoveMonster();
+                CharacterMove();
             break;
 
             case MonsterState.Attack:
-                MonsterCommonAttack();
+                CharacterCommonAttack();
             break;
 
             case MonsterState.Damage:
@@ -90,31 +90,31 @@ public partial class Monster : MonoBehaviour
     }
 
     /// <summary>
-    /// ¸ó½ºÅÍÀÇ ÀÌµ¿
+    /// ëª¬ìŠ¤í„°ì˜ ì´ë™
     /// </summary>
-    protected virtual void MoveMonster()
+    protected virtual void CharacterMove()
     {
-        // ¸ó½ºÅÍ¿Í ÇÃ·¹ÀÌ¾îÀÇ ÇöÀç °Å¸®
+        // ëª¬ìŠ¤í„°ì™€ í”Œë ˆì´ì–´ì˜ í˜„ì¬ ê±°ë¦¬
         float distance = Vector3.Distance(transform.position, playerTrs.position);
 
-        // ÇÃ·¹ÀÌ¾î°¡ ¸ó½ºÅÍÀÇ Ãß°İ ¹üÀ§¿¡¼­ ¹ş¾î³´´Ù¸é
+        // í”Œë ˆì´ì–´ê°€ ëª¬ìŠ¤í„°ì˜ ì¶”ê²© ë²”ìœ„ì—ì„œ ë²—ì–´ë‚«ë‹¤ë©´
         if(distance >= traceRange)
         {
-            // ¸ó½ºÅÍÀÇ ÇöÀç »óÅÂ¸¦ ´ë±â »óÅÂ·Î ¹Ù²Ù°í return
+            // ëª¬ìŠ¤í„°ì˜ í˜„ì¬ ìƒíƒœë¥¼ ëŒ€ê¸° ìƒíƒœë¡œ ë°”ê¾¸ê³  return
             monsterState = MonsterState.Idle;
             return;
         }
         
-        // ÇÃ·¹ÀÌ¾î°¡ ¸ó½ºÅÍÀÇ Ãß°İ ¹üÀ§ ¾È¿¡ ÀÖ°í °ø°İ ¹üÀ§º¸´Ù´Â ¸Ö¸® ÀÖ´Ù¸é
-        if(distance > attackRange)
+        // í”Œë ˆì´ì–´ê°€ ëª¬ìŠ¤í„°ì˜ ì¶”ê²© ë²”ìœ„ ì•ˆì— ìˆê³  ê³µê²© ë²”ìœ„ë³´ë‹¤ëŠ” ë©€ë¦¬ ìˆë‹¤ë©´
+        if(distance > commonAttackRange)
         {
-            // ÇÃ·¹ÀÌ¾î¸¦ ÇâÇØ¼­ ÀÌµ¿
+            // í”Œë ˆì´ì–´ë¥¼ í–¥í•´ì„œ ì´ë™
             transform.LookAt(playerTrs.position, Vector3.up);
-            transform.position = Vector3.MoveTowards(transform.position, playerTrs.position, monsterMoveSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, playerTrs.position, characterMoveSpeed * Time.deltaTime);
         }
-        else if(distance <= attackRange)
-        {// ÇÃ·¹ÀÌ¾î°¡ °ø°İ ¹üÀ§ ¾È¿¡ ÀÖ´Ù¸é
-            monsterState = MonsterState.Attack;     // ¸ó½ºÅÍÀÇ ÇöÀç »óÅÂ¸¦ °ø°İÀ¸·Î º¯°æ
+        else if(distance <= commonAttackRange)
+        {// í”Œë ˆì´ì–´ê°€ ê³µê²© ë²”ìœ„ ì•ˆì— ìˆë‹¤ë©´
+            monsterState = MonsterState.Attack;     // ëª¬ìŠ¤í„°ì˜ í˜„ì¬ ìƒíƒœë¥¼ ê³µê²©ìœ¼ë¡œ ë³€ê²½
         }
     }
 }

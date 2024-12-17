@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public partial class Player : MonoBehaviour
 {
-    // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ enum
+    // í”Œë ˆì´ì–´ ìºë¦­í„° ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ enum
     protected enum PlayerAnimationState
     {
         Idle,
@@ -15,10 +15,10 @@ public partial class Player : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¿¡ µû¶ó¼­ ¾Ö´Ï¸ŞÀÌÅÍ ÆÄ¶ó¹ÌÅÍ °ªÀ» Àû¿ëÇØ
-    /// ¾Ö´Ï¸ŞÀÌ¼ÇÀÌ ½ÇÇàµÇµµ·Ï ÇÏ´Â ÇÔ¼ö
+    /// í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœì— ë”°ë¼ì„œ ì• ë‹ˆë©”ì´í„° íŒŒë¼ë¯¸í„° ê°’ì„ ì ìš©í•´
+    /// ì• ë‹ˆë©”ì´ì…˜ì´ ì‹¤í–‰ë˜ë„ë¡ í•˜ëŠ” í•¨ìˆ˜
     /// </summary>
-    protected void AnimationStateCheck()
+    protected void CharacterStateCheck()
     {
         //switch(animState)
         //{

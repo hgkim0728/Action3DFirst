@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,28 +7,28 @@ public partial class Player : MonoBehaviour
     #region Move
     protected Rigidbody rigid;
 
-    public float moveSpeed = 1.0f;  // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÌµ¿¼Óµµ
-    public float rotationSpeed = 100f;      // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÌµ¿½Ã È¸Àü ¼Óµµ
-    public float gravity = -3f;     // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ¿¡°Ô Àû¿ëµÇ´Â Áß·Â
+    public float characterMoveSpeed = 1.0f;  // í”Œë ˆì´ì–´ ìºë¦­í„° ì´ë™ì†ë„
+    public float rotationSpeed = 100f;      // í”Œë ˆì´ì–´ ìºë¦­í„° ì´ë™ì‹œ íšŒì „ ì†ë„
+    public float gravity = -3f;     // í”Œë ˆì´ì–´ ìºë¦­í„°ì—ê²Œ ì ìš©ë˜ëŠ” ì¤‘ë ¥
     #endregion
 
     #region Animation
     protected Animator animator;
-    protected PlayerAnimationState animState = PlayerAnimationState.Idle;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ
+    protected PlayerAnimationState animState = PlayerAnimationState.Idle;   // í”Œë ˆì´ì–´ ìºë¦­í„° ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ
     #endregion
 
     #region Battle
-    protected Collider[] attackTarget = null;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ °ø°İÀ» ´­·¶À» ¶§ ÁÖº¯¿¡ ÀÖ´Â ÀûÀÇ Äİ¶óÀÌ´õ°¡ µé¾î°¥ ¹è¿­
-    public LayerMask monsterLayer;  // ¸ó½ºÅÍ ·¹ÀÌ¾î ¸¶½ºÅ©°¡ µé¾î°¥ º¯¼ö
+    protected Collider[] attackTarget = null;   // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ê³µê²©ì„ ëˆŒë €ì„ ë•Œ ì£¼ë³€ì— ìˆëŠ” ì ì˜ ì½œë¼ì´ë”ê°€ ë“¤ì–´ê°ˆ ë°°ì—´
+    public LayerMask monsterLayer;  // ëª¬ìŠ¤í„° ë ˆì´ì–´ ë§ˆìŠ¤í¬ê°€ ë“¤ì–´ê°ˆ ë³€ìˆ˜
 
-    public int playerHP = 10;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ Ã¼·Â
-    public int playerAP = 5;    // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ °ø°İ·Â
+    public int characterCurrentHP = 10;   // í”Œë ˆì´ì–´ ìºë¦­í„° ì²´ë ¥
+    public int characterAP = 5;    // í”Œë ˆì´ì–´ ìºë¦­í„° ê³µê²©ë ¥
 
-    public float playerAttackRage = 2.0f;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ °ø°İ ¹üÀ§
-    public float commonAttackCoolTime = 1.0f;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÀÏ¹İ °ø°İ ÄğÅ¸ÀÓ
-    public float damageTime = 1.5f;     // ÇÃ·¹ÀÌ¾î°¡ ÇÇ°İ ´çÇÑ µÚ µ¥¹ÌÁö¸¦ ¹ŞÁö ¾Ê°í Á¶ÀÛÇÒ ¼ö ¾ø´Â ½Ã°£
+    public float commonAttackRage = 2.0f;   // í”Œë ˆì´ì–´ ìºë¦­í„° ê³µê²© ë²”ìœ„
+    public float commonAttackTime = 1.0f;   // í”Œë ˆì´ì–´ ìºë¦­í„° ì¼ë°˜ ê³µê²© ì¿¨íƒ€ì„
+    public float characterDamageDelayTime = 1.5f;     // í”Œë ˆì´ì–´ê°€ í”¼ê²© ë‹¹í•œ ë’¤ ë°ë¯¸ì§€ë¥¼ ë°›ì§€ ì•Šê³  ì¡°ì‘í•  ìˆ˜ ì—†ëŠ” ì‹œê°„
 
-    protected bool inActive = false;    // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ÀÌ¹Ì Çàµ¿ÁßÀÎÁö ¾Æ´ÑÁö
+    protected bool inActive = false;    // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ì´ë¯¸ í–‰ë™ì¤‘ì¸ì§€ ì•„ë‹Œì§€
     #endregion
 
     protected void Start()
@@ -39,14 +39,14 @@ public partial class Player : MonoBehaviour
 
     protected void Update()
     {
-        Move();
-        PlayerCommonAttack();
-        AnimationStateCheck();
+        CharacterMove();
+        CharacterCommonAttack();
+        CharacterStateCheck();
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, playerAttackRage);
+        Gizmos.DrawWireSphere(transform.position, commonAttackRage);
     }
 }

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,39 +6,39 @@ using UnityEngine;
 public partial class Player : MonoBehaviour
 {
     /// <summary>
-    /// ÀÌµ¿Å°¸¦ ´­·¶À» ¶§ ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ÀÌµ¿
+    /// ì´ë™í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ì´ë™
     /// </summary>
-    protected void Move()
+    protected void CharacterMove()
     {
-        // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ °ø°İ µî ´Ù¸¥ Çàµ¿À» ½ÇÇàÁßÀÏ ¶§´Â
-        // ÀÌµ¿ÇÒ ¼ö ¾øµµ·Ï return
+        // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ê³µê²© ë“± ë‹¤ë¥¸ í–‰ë™ì„ ì‹¤í–‰ì¤‘ì¼ ë•ŒëŠ”
+        // ì´ë™í•  ìˆ˜ ì—†ë„ë¡ return
         if (inActive == true) return;
 
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
-        // ÀÔ·ÂµÈ ¹æÇâÅ°·Î ÀÌµ¿ ¹æÇâÀ» ¼³Á¤
-        Vector3 moveDir = new Vector3(x, 0, z).normalized;  // ´ë°¢¼± ÀÌµ¿½Ã ¼Óµµ°¡ Áõ°¡ÇÏ´Â Çö»óÀ» ¸·±â À§ÇØ noramlized
-        moveDir *= moveSpeed;
+        // ì…ë ¥ëœ ë°©í–¥í‚¤ë¡œ ì´ë™ ë°©í–¥ì„ ì„¤ì •
+        Vector3 moveDir = new Vector3(x, 0, z).normalized;  // ëŒ€ê°ì„  ì´ë™ì‹œ ì†ë„ê°€ ì¦ê°€í•˜ëŠ” í˜„ìƒì„ ë§‰ê¸° ìœ„í•´ noramlized
+        moveDir *= characterMoveSpeed;
         moveDir.y = gravity;
         rigid.velocity = moveDir;
 
-        // ¹æÇâÅ°¸¦ ÀÔ·ÂÁßÀÌ¶ó¸é
+        // ë°©í–¥í‚¤ë¥¼ ì…ë ¥ì¤‘ì´ë¼ë©´
         if(x != 0 || z != 0)
         {
-            animState = PlayerAnimationState.Run;   // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ RunÀ¸·Î
+            animState = PlayerAnimationState.Run;   // í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ Runìœ¼ë¡œ
             Rotate(moveDir);
         }
         else
-        {// ¹æÇâÅ°¸¦ ´©¸£Áö ¾Ê´Â »óÅÂ¶ó¸é
-            animState = PlayerAnimationState.Idle;  // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ Idle·Î
+        {// ë°©í–¥í‚¤ë¥¼ ëˆ„ë¥´ì§€ ì•ŠëŠ” ìƒíƒœë¼ë©´
+            animState = PlayerAnimationState.Idle;  // í”Œë ˆì´ì–´ ìºë¦­í„° ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ Idleë¡œ
         }
     }
 
     /// <summary>
-    /// ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ÀÌµ¿¹æÇâ¿¡ µû¶ó È¸Àü
+    /// í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ ì´ë™ë°©í–¥ì— ë”°ë¼ íšŒì „
     /// </summary>
-    /// <param name="_moveDir">ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍÀÇ ÇöÀç ÀÌµ¿ ¹æÇâ</param>
+    /// <param name="_moveDir">í”Œë ˆì´ì–´ ìºë¦­í„°ì˜ í˜„ì¬ ì´ë™ ë°©í–¥</param>
     protected void Rotate(Vector3 _moveDir)
     {
         Quaternion playerRotation = Quaternion.LookRotation(_moveDir, Vector3.up);

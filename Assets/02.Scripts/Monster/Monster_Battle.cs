@@ -1,29 +1,29 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract partial class Monster : MonoBehaviour
 {
-    protected abstract void MonsterCommonAttack();
+    protected abstract void CharacterCommonAttack();
 
-    protected IEnumerator MonsterWaitTime(float _waitTime)
+    protected IEnumerator WaitTime(float _time)
     {
-        yield return new WaitForSeconds(_waitTime);
+        yield return new WaitForSeconds(_time);
 
         inActive = false;
     }
 
-    public void MonsterGetDamage(int _damage)
+    public void CharacterGetDamage(int _damage)
     {
         if (inActive == true) return;
 
         inActive = true;
-        // Ä³¸¯ÅÍ ÀÌµ¿ Á¤Áö
-        monsterHP -= _damage;    // µ¥¹ÌÁö ¸¸Å­ Ã¼·ÂÀ» ±ğ´Â´Ù
+        // ìºë¦­í„° ì´ë™ ì •ì§€
+        characterCurrentHP -= _damage;    // ë°ë¯¸ì§€ ë§Œí¼ ì²´ë ¥ì„ ê¹ëŠ”ë‹¤
         animator.SetTrigger("Damage");
         monsterState = MonsterState.Damage;
-        StartCoroutine(MonsterWaitTime(monsterDamageDelay));
-        Debug.Log("ÇÇ°İ");
+        StartCoroutine(WaitTime(characterDamageDelayTime));
+        Debug.Log("í”¼ê²©");
     }
 }
