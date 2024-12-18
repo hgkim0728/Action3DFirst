@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : MonoBehaviour
+public partial class Player : Character
 {
     // 플레이어 캐릭터 애니메이션 상태 enum
     protected enum PlayerAnimationState
@@ -18,7 +18,7 @@ public partial class Player : MonoBehaviour
     /// 플레이어 캐릭터의 애니메이션 상태에 따라서 애니메이터 파라미터 값을 적용해
     /// 애니메이션이 실행되도록 하는 함수
     /// </summary>
-    protected void CharacterStateCheck()
+    protected override void CharacterStateCheck()
     {
         //switch(animState)
         //{

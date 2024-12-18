@@ -13,7 +13,12 @@ public abstract class Character : MonoBehaviour
     protected int characterCurrentHP;      // 캐릭터의 현재 체력
     public int characterAP;     // 캐릭터의 공격력
 
-    protected bool inAction;    // 캐릭터가 동작을 실행중인지 여부
+    protected bool inActive;    // 캐릭터가 동작을 실행중인지 여부
+
+    protected void Start()
+    {
+        characterCurrentHP = characterMaxHP;
+    }
 
     /// <summary>
     /// 캐릭터의 일반 공격
@@ -30,12 +35,13 @@ public abstract class Character : MonoBehaviour
     /// </summary>
     protected abstract void CharacterStateCheck();
 
-    protected void CharacterGetDamage(int _damage)
+    public void CharacterGetDamage(int _damage)
     {
-        if(inAction == true) return;
+        if(inActive == true) return;
 
-        inAction = true;
+        inActive = true;
         characterCurrentHP -= _damage;
+        Debug.Log("피격");
         StartCoroutine(WaitTime(characterDamageDelayTime));
     }
 
@@ -48,6 +54,6 @@ public abstract class Character : MonoBehaviour
     {
         yield return new WaitForSeconds(_time);
 
-        inAction = false;
+        inActive = false;
     }
 }

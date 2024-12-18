@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Player : MonoBehaviour
+public partial class Player : Character
 {
     #region Move
     protected Rigidbody rigid;
 
-    public float characterMoveSpeed = 1.0f;  // 플레이어 캐릭터 이동속도
     public float rotationSpeed = 100f;      // 플레이어 캐릭터 이동시 회전 속도
     public float gravity = -3f;     // 플레이어 캐릭터에게 적용되는 중력
     #endregion
@@ -20,19 +19,11 @@ public partial class Player : MonoBehaviour
     #region Battle
     protected Collider[] attackTarget = null;   // 플레이어 캐릭터가 공격을 눌렀을 때 주변에 있는 적의 콜라이더가 들어갈 배열
     public LayerMask monsterLayer;  // 몬스터 레이어 마스크가 들어갈 변수
-
-    public int characterCurrentHP = 10;   // 플레이어 캐릭터 체력
-    public int characterAP = 5;    // 플레이어 캐릭터 공격력
-
-    public float commonAttackRage = 2.0f;   // 플레이어 캐릭터 공격 범위
-    public float commonAttackTime = 1.0f;   // 플레이어 캐릭터 일반 공격 쿨타임
-    public float characterDamageDelayTime = 1.5f;     // 플레이어가 피격 당한 뒤 데미지를 받지 않고 조작할 수 없는 시간
-
-    protected bool inActive = false;    // 플레이어 캐릭터가 이미 행동중인지 아닌지
     #endregion
 
     protected void Start()
     {
+        base.Start();
         rigid = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
     }
@@ -47,6 +38,6 @@ public partial class Player : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, commonAttackRage);
+        Gizmos.DrawWireSphere(transform.position, commonAttackRange);
     }
 }

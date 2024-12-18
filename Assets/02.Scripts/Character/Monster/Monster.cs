@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class Monster : MonoBehaviour
+public partial class Monster : Character
 {
     // 몬스터 상태 enum
     protected enum MonsterState
@@ -19,18 +19,10 @@ public partial class Monster : MonoBehaviour
     protected Transform playerTrs;  // 플레이어의 Transform
     protected Animator animator;
 
-    public float characterMoveSpeed = 5f;     // 몬스터 이동 속도
-
     public float traceRange = 5f;   // 플레이어 캐릭터를 추격하는 범위
-    public float commonAttackRange = 1f;  // 플레이어 캐릭터에게 공격을 시도하는 범위
     public float attackDistance = 2f;   // 몬스터의 공격이 닿는 범위
-    public float commonAttackTime = 2.0f;    // 몬스터 일반공격 쿨타임
-    public float characterDamageDelayTime = 1f;
 
-    public int characterCurrentHP = 5;   // 몬스터의 체력
-    public int characterAP = 1;   // 몬스터의 공격력
-
-    protected bool inActive = false;    // 다른 동작을 실행중인지 아닌지 알 수 있게 하는 변수
+    protected bool damaged = false;
 
     private void OnDrawGizmos()
     {
@@ -48,6 +40,7 @@ public partial class Monster : MonoBehaviour
 
     void Start()
     {
+        base.Start();
         animator = GetComponent<Animator>();
         playerTrs = GameObject.FindGameObjectWithTag("Player").transform;
     }
@@ -57,10 +50,19 @@ public partial class Monster : MonoBehaviour
         CharacterStateCheck();
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Weapon")
+        {
+            int damage = playerTrs.GetComponent<Player>().characterAP;
+            CharacterGetDamage(damage);
+        }
+    }
+
     /// <summary>
     /// 몬스터의 상태를 체크하고 상태에 따라 실행할 동작을 선택
     /// </summary>
-    protected void CharacterStateCheck()
+    protected override void CharacterStateCheck()
     {
         switch(monsterState)
         {
@@ -92,7 +94,7 @@ public partial class Monster : MonoBehaviour
     /// <summary>
     /// 몬스터의 이동
     /// </summary>
-    protected virtual void CharacterMove()
+    protected override void CharacterMove()
     {
         // 몬스터와 플레이어의 현재 거리
         float distance = Vector3.Distance(transform.position, playerTrs.position);

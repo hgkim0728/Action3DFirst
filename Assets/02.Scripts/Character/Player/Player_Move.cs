@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public partial class Player : MonoBehaviour
+public partial class Player : Character
 {
     /// <summary>
     /// 이동키를 눌렀을 때 플레이어 캐릭터가 이동
     /// </summary>
-    protected void CharacterMove()
+    protected override void CharacterMove()
     {
         // 플레이어 캐릭터가 공격 등 다른 행동을 실행중일 때는
         // 이동할 수 없도록 return
