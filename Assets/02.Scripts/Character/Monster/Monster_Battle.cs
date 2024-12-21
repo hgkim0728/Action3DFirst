@@ -41,14 +41,30 @@ public partial class Monster : Character
 
     protected virtual void CharacterGetDamage(int _damage)
     {
-        if (damaged == true) return;
+        if (damaged == true || isDie == true) return;
         inActive = true;
         damaged = true;
         characterCurrentHP -= _damage;
         Debug.Log("피격");
         animator.SetTrigger("Damage");
-        monsterState = MonsterState.Damage;
-        StartCoroutine(WaitTime(characterDamageDelayTime));
+
+        if (characterCurrentHP <= 0)
+        {
+            isDie = true;
+            characterCurrentHP = 0;
+            monsterState = MonsterState.Die;
+            CharacterDie();
+        }
+        else
+        {
+            monsterState = MonsterState.Damage;
+            StartCoroutine(WaitTime(characterDamageDelayTime));
+        }
+    }
+
+    protected virtual void CharacterDie()
+    {
+        base.CharacterDie();
     }
 
     protected virtual IEnumerator WaitTime(float _time)

@@ -10,14 +10,14 @@ public partial class Monster : Character
         Idle,
         Trace,
         Attack,
-        Damage
+        Damage,
+        Die
     }
 
     // 몬스터 현재 상태
     protected MonsterState monsterState = MonsterState.Idle;
 
     protected Transform playerTrs;  // 플레이어의 Transform
-    protected Animator animator;
 
     public float traceRange = 5f;   // 플레이어 캐릭터를 추격하는 범위
     public float attackDistance = 2f;   // 몬스터의 공격이 닿는 범위

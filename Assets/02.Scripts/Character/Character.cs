@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Character : MonoBehaviour
 {
+    protected Animator animator;
     public float characterMoveSpeed;    // 캐릭터 이동속도
     
     public float commonAttackRange;     // 캐릭터의 일반 공격 범위
@@ -13,7 +14,8 @@ public abstract class Character : MonoBehaviour
     protected int characterCurrentHP;      // 캐릭터의 현재 체력
     public int characterAP;     // 캐릭터의 공격력
 
-    protected bool inActive;    // 캐릭터가 동작을 실행중인지 여부
+    protected bool inActive = false;    // 캐릭터가 동작을 실행중인지 여부
+    protected bool isDie = false;
 
     protected void Start()
     {
@@ -37,12 +39,23 @@ public abstract class Character : MonoBehaviour
 
     public void CharacterGetDamage(int _damage)
     {
-        if(inActive == true) return;
+        if(inActive == true || isDie == true) return;
 
         inActive = true;
         characterCurrentHP -= _damage;
         Debug.Log("피격");
-        StartCoroutine(WaitTime(characterDamageDelayTime));
+
+        if (characterCurrentHP <= 0)
+        {
+            isDie = true;
+            characterCurrentHP = 0;
+            CharacterDie();
+        }
+        else
+        {
+            animator.SetTrigger("Damage");
+            StartCoroutine(WaitTime(characterDamageDelayTime));
+        }
     }
 
     /// <summary>
@@ -55,5 +68,10 @@ public abstract class Character : MonoBehaviour
         yield return new WaitForSeconds(_time);
 
         inActive = false;
+    }
+
+    protected void CharacterDie()
+    {
+        animator.SetTrigger("Die");
     }
 }

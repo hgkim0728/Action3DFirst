@@ -52,5 +52,16 @@ public partial class Player : Character
         rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
         animator.SetTrigger("Damage");
         animState = PlayerAnimationState.Damage;
+        
+        if(isDie == true)
+        {
+            animState = PlayerAnimationState.Die;
+            animator.SetInteger("Run", (int)animState);
+        }
+    }
+
+    protected virtual void CharacterDie()
+    {
+        base.CharacterDie();
     }
 }

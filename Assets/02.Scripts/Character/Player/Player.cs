@@ -12,7 +12,6 @@ public partial class Player : Character
     #endregion
 
     #region Animation
-    protected Animator animator;
     protected PlayerAnimationState animState = PlayerAnimationState.Idle;   // 플레이어 캐릭터 애니메이션 상태
     #endregion
 
@@ -30,6 +29,7 @@ public partial class Player : Character
 
     protected void Update()
     {
+        if(isDie == true) return;
         CharacterMove();
         CharacterCommonAttack();
         CharacterStateCheck();
