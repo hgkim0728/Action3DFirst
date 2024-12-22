@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,33 +7,33 @@ public class Archer : Player
     public GameObject arrow;
     public Transform shotPosition;
 
-    protected virtual void CharacterCommonAttack()
+    protected override void CharacterCommonAttack()
     {
-        // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ°¡ ´Ù¸¥ Çàµ¿À» ½ÇÇàÇÏ´Â »óÅÂ°¡ ¾Æ´Ï¸é¼­
-        // ¿ŞÂÊ ÄÁÆ®·Ñ Å°¸¦ ´­·¶À» ¶§
+        // í”Œë ˆì´ì–´ ìºë¦­í„°ê°€ ë‹¤ë¥¸ í–‰ë™ì„ ì‹¤í–‰í•˜ëŠ” ìƒíƒœê°€ ì•„ë‹ˆë©´ì„œ
+        // ì™¼ìª½ ì»¨íŠ¸ë¡¤ í‚¤ë¥¼ ëˆŒë €ì„ ë•Œ
         if (inActive == false && Input.GetKeyDown(KeyCode.LeftControl))
         {
-            inActive = true;    // ÀÌ µ¿ÀÛÀ» ½ÇÇàÇÏ´Â Áß¿¡ ´Ù¸¥ µ¿ÀÛÀ» ½ÇÇàÇÏÁö ¸øÇÏµµ·Ï
+            inActive = true;    // ì´ ë™ì‘ì„ ì‹¤í–‰í•˜ëŠ” ì¤‘ì— ë‹¤ë¥¸ ë™ì‘ì„ ì‹¤í–‰í•˜ì§€ ëª»í•˜ë„ë¡
 
-            // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ÁÖº¯ÀÇ ¸ó½ºÅÍ¸¦ °¡Á®¿À±â
+            // í”Œë ˆì´ì–´ ìºë¦­í„° ì£¼ë³€ì˜ ëª¬ìŠ¤í„°ë¥¼ ê°€ì ¸ì˜¤ê¸°
             attackTarget = Physics.OverlapSphere(transform.position, commonAttackRange, monsterLayer);
 
-            // ÁÖº¯¿¡ ¸ó½ºÅÍ°¡ ÇÏ³ª ÀÌ»ó ÀÖ´Ù¸é
+            // ì£¼ë³€ì— ëª¬ìŠ¤í„°ê°€ í•˜ë‚˜ ì´ìƒ ìˆë‹¤ë©´
             if (attackTarget.Length >= 1)
             {
-                // ±×Áß ÇÏ³ª¸¦ ¹Ù¶óº¸µµ·Ï
+                // ê·¸ì¤‘ í•˜ë‚˜ë¥¼ ë°”ë¼ë³´ë„ë¡
                 transform.LookAt(attackTarget[0].transform.position);
             }
 
-            Debug.Log("°ø°İ");
-            // ÇÃ·¹ÀÌ¾î Ä³¸¯ÅÍ ¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ¸¦ °ø°İÀ¸·Î
+            Debug.Log("ê³µê²©");
+            // í”Œë ˆì´ì–´ ìºë¦­í„° ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœë¥¼ ê³µê²©ìœ¼ë¡œ
             animState = PlayerAnimationState.Attack;
-            // ÀÌµ¿ÁßÀÌ¾úÀ» ¶§ °ø°İ ¾Ö´Ï¸ŞÀÌ¼ÇÀ» ½ÇÇàÇÏ¸é¼­ ¿òÁ÷ÀÌ´Â »óÈ² ¹æÁö
+            // ì´ë™ì¤‘ì´ì—ˆì„ ë•Œ ê³µê²© ì• ë‹ˆë©”ì´ì…˜ì„ ì‹¤í–‰í•˜ë©´ì„œ ì›€ì§ì´ëŠ” ìƒí™© ë°©ì§€
             rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
 
-            GameObject.Instantiate(arrow, shotPosition.position, Quaternion.identity);
+            GameObject.Instantiate(arrow, shotPosition.position, transform.rotation);
 
-            // ÀÏ¹İ °ø°İÀÌ ½ÇÇàµÇ´Â ½Ã°£ µ¿¾È inActive°¡ true°¡ µÇÁö ¾Êµµ·Ï
+            // ì¼ë°˜ ê³µê²©ì´ ì‹¤í–‰ë˜ëŠ” ì‹œê°„ ë™ì•ˆ inActiveê°€ trueê°€ ë˜ì§€ ì•Šë„ë¡
             StartCoroutine(WaitTime(commonAttackTime));
         }
     }
